@@ -1,0 +1,102 @@
+version: "3.7"
+services:
+  auth:
+    build: ./apps/auth-service
+    ports:
+      - "7777:7777"
+    volumes:
+      - supertokens:/apps/auth-service
+    networks:
+      - supertokens
+    env_file:
+      - apps/auth-service/.env
+
+  frontend:
+    build: ./apps/frontend
+    ports:
+      - "3333:3333"
+    volumes:
+      - supertokens:/apps/frontend
+    networks:
+      - supertokens
+    env_file:
+      - apps/frontend/.env
+
+  mongo:
+    image: "mongo:4.2"
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    volumes:
+      - supertokens:/data/db
+    networks:
+      - supertokens
+
+  mysql:
+    image: "mysql:5.7.40"
+    command: ["--default-authentication-plugin=mysql_native_password"]
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
+      - MYSQL_DATABASE=supertokens
+    ports:
+      - "3308:3306"
+    volumes:
+      - "supertokens:/var/lib/mysql-data"
+    networks:
+      - supertokens
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - supertokens:/var/lib/rabbitmq
+    networks:
+      - supertokens
+    env_file:
+      - .env.rabbitmq
+    command: ["bash", "-c", "chmod 400 /var/lib/rabbitmq/.erlang.cookie; rabbitmq-server"]
+
+  supertokens:
+    image: "registry.supertokens.io/supertokens/supertokens-mysql:4.2"
+    ports:
+      - "3567:3567"
+    depends_on:
+      - mysql
+    volumes:
+      - supertokens:/apps/supertokens
+    networks:
+      - supertokens
+    env_file:
+      - .env.supertokens
+    restart: unless-stopped
+    healthcheck:
+      test: >
+        bash -c 'exec 3<>/dev/tcp/mysql/3567 && echo -e "GET /hello HTTP/1.1\r\nhost: mysql:3567\r\nConnection: close\r\n\r\n" >&3 && cat <&3 | grep "Hello"'
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  users:
+    build: ./apps/users-service
+    ports:
+      - "7778:7778"
+    volumes:
+      - supertokens:/apps/users-service
+    networks:
+      - supertokens
+    env_file:
+      - apps/users-service/.env
+
+volumes:
+  supertokens:
+    name: supertokens
+networks:
+  supertokens:
+    name: supertokens
+

@@ -1,0 +1,29 @@
+{
+  "name": "supertokens-micro",
+  "version": "0.1.0",
+  "description": "microservices implementing supertokens, nestjs, rabbitmq, mongodb and mysql",
+  "main": "main.js",
+  "repository": "https://github.com/miguelcabgil/nestjs-rabbitmq-supertokens",
+  "author": "Miguel Caballero <miguelcabgil@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": ">=16.x"
+  },
+  "scripts": {
+    "build": "turbo run build --global-deps=\".env*\"",
+    "start": "dotenv turbo run start --parallel",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "devDependencies": {
+    "turbo": "^1.6.3"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "dependencies": {
+    "dotenv-cli": "^6.0.0"
+  }
+}
