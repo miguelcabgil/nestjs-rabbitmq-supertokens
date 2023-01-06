@@ -20,13 +20,16 @@
   },
   "dependencies": {
     "@nestjs/common": "^9.2.1",
+    "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.2.1",
+    "@nestjs/microservices": "^9.2.1",
     "@nestjs/platform-express": "^9.2.1",
     "amqp-connection-manager": "^4.1.10",
     "amqplib": "^0.10.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.8.0"
+    "rxjs": "^7.8.0",
+    "supertokens-node": "^12.1.4"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.1.8",
