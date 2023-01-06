@@ -13,10 +13,12 @@
   "scripts": {
     "build": "turbo run build --global-deps=\".env*\"",
     "start": "dotenv turbo run start --parallel",
+    "start:dev": "dotenv turbo run start:dev --parallel",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
+    "eslint-config-custom": "^0.0.0",
     "turbo": "^1.6.3"
   },
   "workspaces": [
