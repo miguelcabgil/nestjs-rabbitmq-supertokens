@@ -4,6 +4,7 @@ export interface EnvConfig {
   getGoogleClientSecret(): string;
   getGoogleScopes(): string[];
   getRabbitmqPort(): number;
+  getRabbitmqUri(): string;
   getRabbitmqHostname(): string;
   getRabbitmqPassword(): string;
   getRabbitmqQueue(): string;

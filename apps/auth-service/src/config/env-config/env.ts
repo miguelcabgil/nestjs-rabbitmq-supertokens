@@ -5,9 +5,10 @@ export default () => ({
   google: {
     clientId: process.env.GOOGLE_OAUTH_CLIENT_ID,
     clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET,
-    scopes: process.env.GOOGLE_OAUTH_SCOPES ?? [],
+    scopes: process.env.GOOGLE_OAUTH_SCOPES ?? '',
   },
   rabbitmq: {
+    uri: process.env.RABBITMQ_URI,
     hostname: process.env.RABBITMQ_HOSTNAME,
     password: process.env.RABBITMQ_PASSWORD,
     port: parseInt(process.env.RABBITMQ_PORT, 10) ?? 5672,

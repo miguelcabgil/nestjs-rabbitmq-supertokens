@@ -17,9 +17,11 @@ export class EnvConfigService implements EnvConfig {
     return this.configService.getOrThrow('google.clientSecret');
   }
   getGoogleScopes(): string[] {
-    return this.configService.getOrThrow('google.scopes');
+    return this.configService.getOrThrow<string>('google.scopes').split(',');
   }
-
+  getRabbitmqUri(): string {
+    return this.configService.getOrThrow('rabbitmq.uri');
+  }
   getRabbitmqPort(): number {
     return this.configService.getOrThrow('rabbitmq.port');
   }
