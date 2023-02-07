@@ -7,6 +7,7 @@ import ThirdPartyEmailPassword from 'supertokens-node/recipe/thirdpartyemailpass
 import Dashboard from 'supertokens-node/recipe/dashboard';
 import UserMetadata from 'supertokens-node/recipe/usermetadata';
 import { IAuthModuleOptions } from './auth-module-options.interface';
+import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
 
 const { Google } = ThirdPartyEmailPassword;
 
@@ -14,6 +15,7 @@ const { Google } = ThirdPartyEmailPassword;
 export class AuthConfigService {
   constructor(
     @Inject(MODULE_OPTIONS_TOKEN) private options: IAuthModuleOptions,
+    private amqpConnection: AmqpConnection,
   ) {
     supertokens.init({
       appInfo: options.appInfo,
